@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This Work is in the public domain and is provided on an "AS IS" BASIS, 
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, 
+	including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, 
+	MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible 
+	for determining the appropriateness of using this Work and assume any risks 
+	associated with your use of this Work. This Work includes contributions authored 
+	by David E. Jones, not as a "work for hire", who hereby disclaims any copyright 
+	to the same. -->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+	default-menu-title="角色列表" default-menu-include="false">
+	<transition name="createRoleType">
+		<service-call name="create#mantle.party.RoleType" />
+		<default-response url="." />
+	</transition>
+	<transition name="editRole">
+		<default-response url="../RoleDetail"></default-response>
+	</transition>
+	<actions>
+		<entity-find entity-name="mantle.party.RoleType" list="roleTypeList"
+			limit="30">
+
+			<search-form-inputs default-order-by="roleTypeId"></search-form-inputs>
+		</entity-find>
+	</actions>
+	<widgets>
+		<container-dialog id="CreateRoleTypeDialog"
+			button-text="添加新角色" width="400">
+			<form-single name="CreateRoleType" transition="createRoleType">
+				<field name="roleTypeId">
+					<default-field title="角色编码：">
+						<text-line size="20" />
+					</default-field>
+				</field>
+				<field name="parentTypeId">
+					<default-field title="父角色编码：">
+						<text-line size="20" />
+					</default-field>
+				</field>
+				<field name="description">
+					<default-field title="角色描述：">
+						<text-line size="20" />
+					</default-field>
+				</field>
+				<field name="submitButton">
+					<default-field title="Create">
+						<submit />
+					</default-field>
+				</field>
+			</form-single>
+		</container-dialog>
+		<container-panel>
+			<panel-left>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<!-- <container> <tree name="RoleTypeTree" open-path="${idPathSb.toString()}"> 
+					<parameter name="rootCommEventId"/> <tree-node name="MessageNode"> <actions> 
+					<entity-find-one entity-name="mantle.party.PartyDetail" value-field="msgFrom"> 
+					<field-map field-name="partyId" from="nodeList_entry?.fromPartyId"/></entity-find-one> 
+					<entity-find-one entity-name="moqui.basic.StatusItem" value-field="statusItem"> 
+					<field-map field-name="statusId" from="nodeList_entry?.statusId"/></entity-find-one> 
+					</actions> <link url="singleMessage" dynamic-load-id="SingleMessageContainer" 
+					text="${ec.resource.expand('PartyNameTemplate','',msgFrom)} at ${ec.l10n.format(nodeList_entry?.entryDate, 
+					'yyyy-MM-dd HH:mm')} (${statusItem?.description})" id="${treeNodeId == '#' 
+					? '' : treeNodeId + '/'}${nodeList_entry?.communicationEventId}"> <parameter 
+					name="communicationEventId" from="nodeList_entry?.communicationEventId"/></link> 
+					<tree-sub-node node-name="MessageNode" list="childMessages"> <actions> <set 
+					field="messageId" from="treeNodeId.split('/').last()"/> <entity-find entity-name="mantle.party.communication.CommunicationEvent" 
+					list="childMessages"> <econdition field-name="parentCommEventId" from="messageId"/> 
+					<order-by field-name="entryDate"/> </entity-find> </actions> </tree-sub-node> 
+					</tree-node> <tree-sub-node node-name="MessageNode" list="topLevelMessages"> 
+					<actions> <entity-find-one entity-name="mantle.party.communication.CommunicationEvent" 
+					value-field="rootCommEvent"> <field-map field-name="communicationEventId" 
+					from="rootCommEventId"/></entity-find-one> <set field="topLevelMessages" 
+					from="[rootCommEvent]"/> </actions> </tree-sub-node> </tree> </container> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</panel-left>
+			<panel-center>
+				<form-list name="RoleTypeList" list="roleTypeList"
+					skip-form="true">
+					<field name="roleTypeId">
+						<header-field title="RoleTypeId" show-order-by="true">
+						</header-field>
+						<default-field>
+							<link url="" text="${roleTypeId}" link-type="anchor"></link>
+						</default-field>
+					</field>
+					<field name="parentTypeId">
+						<header-field title="RarentTypeId" show-order-by="true">
+						</header-field>
+						<default-field>
+							<display />
+						</default-field>
+					</field>
+					<field name="description">
+						<header-field title="Description" show-order-by="true">
+						</header-field>
+						<default-field>
+							<display />
+						</default-field>
+					</field>
+					<field name="edit">
+						<header-field title="操作" show-order-by="true">
+						</header-field>
+						<default-field>
+							<dynamic-dialog button-text="编辑" transition="editRole"
+								id="editRole" linkType="link"><!-- linkType区分链接还是按钮 -->
+								<parameter name="roleTypeId" from="roleTypeId" />
+							</dynamic-dialog>
+						</default-field>
+					</field>
+				</form-list>
+			</panel-center>
+		</container-panel>
+
+	</widgets>
+</screen>

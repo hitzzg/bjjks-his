@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+	default-menu-title="人员管理" default-menu-index="3" default-menu-include="true">
+	<subscreens default-item="PersonList" />
+	<widgets>
+		<subscreens-active />
+	</widgets>
+
+</screen>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+	screen-theme-type-enum-id="" standalone="true" require-authentication="false">
+	<actions>
+		<set field="appsLocation" value="component://his/screen/his.xml" />
+		<set field="currentScreenDef" from="sri.sfi.getScreenDefinition(appsLocation)" />
+		<set field="currentScreenPath" value="/his" />
+	</actions>
+	<macro-template type="html" location="component://templates/screen/templates/adminlte/AdminLTEScreenMacros.html.ftl"/>
+	<subscreens default-item="System">
+		<!-- if the client is an iPad, default to the ipad subscreens item instead 
+			of apps, but allow either to be used explicitly -->
+		<!-- <conditional-default condition="(ec.web.request.getHeader('User-Agent')?:'').matches('.*iPad.*')" 
+			item="ipad"/> -->
+
+		<!-- refer to the UNDECORATED (or self-decorating) app roots here -->
+	</subscreens>
+	<widgets>
+		<render-mode>
+			<text type="html"
+				location="component://templates/screen/templates/adminlte/includes/Header.html.ftl"
+				no-boundary-comment="true" />
+		</render-mode>
+
+		<render-mode>
+			<text type="html"
+				location="component://templates/screen/templates/adminlte/includes/navbar.html.ftl" />
+		</render-mode>
+		<left-side>
+
+			<include-screen
+				location="component://templates/screen/templates/adminlte/LeftMenuTree.xml"
+				share-scope="false" />
+
+		</left-side>		
+        <container style="content-wrapper">
+          <container type="section" style="content-header"></container>		
+			<container type="section" style="content">        
+		<section name="MessagesSection">
+			<widgets>
+				<section-iterate name="headerMessages" list="ec.message.messages"
+					entry="message">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label text="${message}" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerErrors" list="ec.message.errors"
+					entry="errorMessage">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label text="${ec.l10n.getLocalizedMessage(errorMessage)}" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerValidationErrors" list="ec.message.validationErrors"
+					entry="validationError">
+					<!-- TODO: put these by fields instead of in header -->
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label
+							text="${ec.l10n.getLocalizedMessage(validationError.message)} (for field ${validationError.field})" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+
+				<section-iterate name="headerSavedMessages" list="ec.web?.savedMessages"
+					entry="message">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label text="${message}" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerSavedErrors" list="ec.web?.savedErrors"
+					entry="errorMessage">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label text="${errorMessage}" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerSavedValidationErrors"
+					list="ec.web?.savedValidationErrors" entry="validationError">
+					<!-- TODO: put these by fields instead of in header -->
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
+						</render-mode>
+						<label
+							text="${ec.l10n.getLocalizedMessage(validationError.message)} (for field ${validationError.field})" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+			</widgets>
+		</section>
+
+		<subscreens-active />
+			</container>
+
+
+		</container>
+		<render-mode>
+			<text type="html"
+				location="component://templates/screen/templates/adminlte/includes/Footer.html.ftl" />
+		</render-mode>
+	</widgets>
+
+</screen>
