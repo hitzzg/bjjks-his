@@ -15,6 +15,6 @@ This Work includes contributions authored by David E. Jones, not as a
         default-menu-title="帐号管理" default-menu-index="1">
     <subscreens default-item="UserAccountList"/>
     <widgets>
-        <subscreens-active/>
+        <subscreens-active/>    
     </widgets>
 </screen>
