@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+	default-menu-include="false">
+
+
+	<widgets>
+		<section name="MessagesSection">
+			<widgets>
+				<section-iterate name="headerMessages" list="ec.message.messages"
+					entry="message">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label text="${message}" type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerErrors" list="ec.message.errors"
+					entry="errorMessage">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label text="${errorMessage}" type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerValidationErrors" list="ec.message.validationErrors"
+					entry="validationError">
+					<!-- TODO: put these by fields instead of in header -->
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label
+							text="${validationError.message} (for field ${validationError.field})"
+							type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+
+				<section-iterate name="headerSavedMessages" list="ec.web?.savedMessages"
+					entry="message">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label text="${message}" type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerSavedErrors" list="ec.web?.savedErrors"
+					entry="errorMessage">
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label text="${errorMessage}" type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+				<section-iterate name="headerSavedValidationErrors"
+					list="ec.web?.savedValidationErrors" entry="validationError">
+					<!-- TODO: put these by fields instead of in header -->
+					<widgets>
+						<render-mode>
+							<text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text>
+						</render-mode>
+						<label
+							text="${validationError.message} (for field ${validationError.field})"
+							type="h4" />
+						<render-mode>
+							<text type="html"><![CDATA[</div>]]></text>
+						</render-mode>
+					</widgets>
+				</section-iterate>
+			</widgets>
+		</section>
+
+	</widgets>
+</screen>

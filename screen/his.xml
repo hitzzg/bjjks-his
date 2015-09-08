@@ -1,134 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
-	screen-theme-type-enum-id="" standalone="true" require-authentication="false">
-	<actions>
-		<set field="appsLocation" value="component://his/screen/his.xml" />
-		<set field="currentScreenDef" from="sri.sfi.getScreenDefinition(appsLocation)" />
-		<set field="currentScreenPath" value="/his" />
-	</actions>
-	<macro-template type="html" location="component://templates/screen/templates/adminlte/AdminLTEScreenMacros.html.ftl"/>
-	<subscreens default-item="System">
-		<!-- if the client is an iPad, default to the ipad subscreens item instead 
-			of apps, but allow either to be used explicitly -->
-		<!-- <conditional-default condition="(ec.web.request.getHeader('User-Agent')?:'').matches('.*iPad.*')" 
-			item="ipad"/> -->
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+        require-authentication="false" screen-theme-type-enum-id="STT_INTERNAL" default-menu-title="医院管理系统">
+    <!-- NOTE: require-authentication=false is required to allow sub-screens to decide. -->
 
-		<!-- refer to the UNDECORATED (or self-decorating) app roots here -->
-	</subscreens>
-	<widgets>
-		<render-mode>
-			<text type="html"
-				location="component://templates/screen/templates/adminlte/includes/Header.html.ftl"
-				no-boundary-comment="true" />
-		</render-mode>
+    <transition name="setPreference">
+        <parameter name="preferenceKey"/><parameter name="preferenceValue"/>
+        <actions><script>ec.user.setPreference(preferenceKey, preferenceValue)</script></actions>
+        <default-response type="none"/>
+    </transition>
 
-		<render-mode>
-			<text type="html"
-				location="component://templates/screen/templates/adminlte/includes/navbar.html.ftl" />
-		</render-mode>
-		<left-side>
+    <subscreens default-item="AppList">
+        <!-- refer to the various app roots here -->
+        <subscreens-item name="osrs" location="component://osrs/screen/osrs.xml" menu-title="医院门诊挂号系统" menu-index="81"/>
+        <subscreens-item name="osqs" location="component://osqs/screen/osqs.xml" menu-title="医院排队叫号系统" menu-index="82"/>
+        <subscreens-item name="osds" location="component://osds/screen/osds.xml" menu-title="医院门诊医生系统" menu-index="83"/>
+        <subscreens-item name="oscs" location="component://oscs/screen/oscs.xml" menu-title="医院门诊收费系统" menu-index="84"/>   
+        <subscreens-item name="hods" location="component://hods/screen/hods.xml" menu-title="医院门诊发药系统" menu-index="85"/>         
+        <subscreens-item name="hpms" location="component://hpms/screen/hpms.xml" menu-title="医院药库管理系统" menu-index="86"/> 
+    </subscreens>
 
-			<include-screen
-				location="component://templates/screen/templates/adminlte/LeftMenuTree.xml"
-				share-scope="false" />
+    <widgets>
+        <container id="wrap"><!-- note: no "bg-light lter" or "bg-dark dk" styles here, on body -->
+            <container id="top">
+                <render-mode><text type="html" location="component://webroot/screen/includes/navbar.html.ftl"/></render-mode>
+                <subscreens-menu type="popup" id="header-menu" title="医院管理系统"/>
+            </container>
+            <!-- <container id="left"></container> -->
+            <container id="content">
+                <!-- <container style="outer"> -->
+                    <container style="inner">
+                        <section name="MessagesSection"><widgets>
+                            <section-iterate name="headerMessages" list="ec.message.messages" entry="message">
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${message}" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
+                            <section-iterate name="headerErrors" list="ec.message.errors" entry="errorMessage">
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${errorMessage}" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
+                            <section-iterate name="headerValidationErrors" list="ec.message.validationErrors" entry="validationError">
+                                <!-- TODO: put these by fields instead of in header -->
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${validationError.message} (for field ${validationError.field})" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
 
-		</left-side>		
-        <container style="content-wrapper">
-          <container type="section" style="content-header"></container>		
-			<container type="section" style="content">        
-		<section name="MessagesSection">
-			<widgets>
-				<section-iterate name="headerMessages" list="ec.message.messages"
-					entry="message">
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label text="${message}" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
-				<section-iterate name="headerErrors" list="ec.message.errors"
-					entry="errorMessage">
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label text="${ec.l10n.getLocalizedMessage(errorMessage)}" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
-				<section-iterate name="headerValidationErrors" list="ec.message.validationErrors"
-					entry="validationError">
-					<!-- TODO: put these by fields instead of in header -->
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label
-							text="${ec.l10n.getLocalizedMessage(validationError.message)} (for field ${validationError.field})" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
+                            <section-iterate name="headerSavedMessages" list="ec.web?.savedMessages" entry="message">
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${message}" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
+                            <section-iterate name="headerSavedErrors" list="ec.web?.savedErrors" entry="errorMessage">
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${errorMessage}" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
+                            <section-iterate name="headerSavedValidationErrors" list="ec.web?.savedValidationErrors" entry="validationError">
+                                <!-- TODO: put these by fields instead of in header -->
+                                <widgets>
+                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
+                                    <label text="${validationError.message} (for field ${validationError.field})" type="h4"/>
+                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
+                                </widgets>
+                            </section-iterate>
+                        </widgets></section>
 
-				<section-iterate name="headerSavedMessages" list="ec.web?.savedMessages"
-					entry="message">
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label text="${message}" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
-				<section-iterate name="headerSavedErrors" list="ec.web?.savedErrors"
-					entry="errorMessage">
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label text="${errorMessage}" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
-				<section-iterate name="headerSavedValidationErrors"
-					list="ec.web?.savedValidationErrors" entry="validationError">
-					<!-- TODO: put these by fields instead of in header -->
-					<widgets>
-						<render-mode>
-							<text type="html"><![CDATA[<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>]]></text>
-						</render-mode>
-						<label
-							text="${ec.l10n.getLocalizedMessage(validationError.message)} (for field ${validationError.field})" />
-						<render-mode>
-							<text type="html"><![CDATA[</div>]]></text>
-						</render-mode>
-					</widgets>
-				</section-iterate>
-			</widgets>
-		</section>
-
-		<subscreens-active />
-			</container>
-
-
-		</container>
-		<render-mode>
-			<text type="html"
-				location="component://templates/screen/templates/adminlte/includes/Footer.html.ftl" />
-		</render-mode>
-	</widgets>
-
+                        <subscreens-active/>
+                    </container>
+                <!-- </container> -->
+            </container>
+        </container>
+        <container id="footer" style="Footer bg-dark dker">
+            <render-mode><text type="html"><![CDATA[
+                    <#assign footerItemList = sri.getThemeValues("STRT_FOOTER_ITEM")>
+                    <div id="apps-footer-content">
+                        <#list footerItemList! as footerItem>
+                            <#assign footerItemTemplate = footerItem?interpret>
+                            <@footerItemTemplate/>
+                        </#list>
+                    </div>
+                ]]></text></render-mode>
+        </container>
+    </widgets>
 </screen>

@@ -1,6 +1,6 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
-	default-menu-title="系统设置" default-menu-index="4">
+	default-menu-title="系统设置" default-menu-index="4" default-menu-include="false">
 	<subscreens default-item="Security"/>
 		<widgets>
 
