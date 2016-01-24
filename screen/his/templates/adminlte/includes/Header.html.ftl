@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="/his/templates/adminlte/css/default.css">
     <link rel="stylesheet" href="/his/templates/adminlte/css/adminlte.css">        
   </head>
-  <body class="skin-blue-light fixed">
+  <!-- hold-transition保持IE下不闪屏 -->
+  <body class="hold-transition  skin-blue-light fixed ">
     <!-- Site wrapper -->
     <div class="wrapper">
