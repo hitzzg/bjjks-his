@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.6.xsd"
+        require-authentication="false" default-menu-include="false">
+
+    <actions>
+        <set field="parentScreenDef" from="currentScreenDef"/>
+        <set field="parentScreenPath" from="currentScreenPath"/>
+    </actions>
+    <widgets>
+        
+            <section-iterate name="ScreenNestedSection" list="showAll == 'true' ? parentScreenDef.getSubscreensItemsSorted() : parentScreenDef.getMenuSubscreensItems()" entry="currentSubscreensItem">
+                <actions>
+                    <set field="currentScreenDef" from="sri.sfi.getScreenDefinition(currentSubscreensItem.location)"/>
+                    <set field="currentScreenPath" value="${parentScreenPath}/${currentSubscreensItem.name}"/>
+                    <set field="currentUrlInfo" from="sri.buildUrl(currentScreenPath)"/>
+                </actions>
+                <widgets>
+                    <section name="ScreenItemRender">
+                        <condition><expression>currentScreenDef != null &amp;&amp; currentUrlInfo?.isPermitted() &amp;&amp; (showAll == 'true' || !currentScreenDef?.hasRequiredParameters())</expression></condition>
+                        <widgets>
+                            <section name="LinkOrLabel">
+                            <condition>
+                                <expression>!currentScreenDef?.hasRequiredParameters()</expression>
+                            </condition>
+                                <widgets>
+                                  <left-tree-nodes location="${currentSubscreensItem.location}" currentScreenPath="${currentScreenPath}"  url="${currentUrlInfo.url}"  text="${currentSubscreensItem.menuTitle}">
+                                    <include-screen location="component://his/screen/his/templates/adminlte/LeftSubMenuTree.xml"
+                                    share-scope="false"/>
+                                  </left-tree-nodes>
+                                </widgets>
+                                <fail-widgets><!-- <label text="${currentSubscreensItem.menuTitle}" style="text-muted"/> --></fail-widgets>
+                            </section>
+
+
+                        </widgets>
+                        <fail-widgets>
+                            <render-mode><text type="html"><![CDATA[<!-- excluding screen at path ${currentScreenPath} -->]]></text></render-mode>
+                        </fail-widgets>
+                    </section>
+                </widgets>
+            </section-iterate>
+       
+    </widgets>
+</screen>

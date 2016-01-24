@@ -1,0 +1,168 @@
+/* .sidebar-menu .treeview-menu::before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color;
+    border-image: none;
+    border-style: dotted;
+    border-width: 0 0 0 1px;
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 25px;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.sidebar-menu .treeview-menu > li::before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color;
+    border-image: none;
+    border-style: dotted;
+    border-width: 1px 0 0;
+    content: "";
+    display: block;
+    left: 20px;
+    position: absolute;
+    top: 17px;
+    width: 7px;
+    z-index: 1;
+} */
+
+.sidebar-menu .treeview-menu > li > a {
+	border-top-style: dotted;
+	border-top-width: 1px;
+	border-top-color: #e4e4e4;
+    display: block;
+    font-size: 13px;
+    padding: 7px 0 9px 15px;
+}
+/* 固定footer */
+.main-footer {
+    background: #fff none repeat scroll 0 0;
+    border-top: 1px solid #d2d6de;
+    color: #444;
+    padding: 15px;
+	position: fixed;
+	left:0px;
+	bottom: 0px;
+	width: 100%;
+	height: 45px;
+}
+/* “主菜单”字体 */
+
+.sidebar-menu li.header {
+    font-size: 15px;
+    padding: 10px 25px 10px 15px;
+}
+
+/* logo和navbar */
+.main-header > .navbar {
+    border: medium none;
+    border-radius: 0;
+    margin-bottom: 0;
+    /* margin-left: 230px; */
+    min-height: 50px;
+    transition: margin-left 0.3s ease-in-out 0s;
+}
+/* sidebar收缩后logo位置不变  */
+.sidebar-mini.sidebar-collapse .main-header .navbar {
+    margin-left: 230px;
+}
+.sidebar-mini.sidebar-collapse .main-header .logo {
+    width: 230px;
+}
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 50px;
+    text-align: center;
+}
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-lg {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 50px;
+    text-align: center;
+}
+
+/*  */
+.fixed .content-wrapper, .fixed .right-side {
+/*     padding-top: 100px; */
+    padding-bottom: 100px;
+}
+.navbar-right {
+/*     float: right !important;
+    margin-right: 0px; */
+}
+/* container-box的header底部下划线 */
+.box-header.with-border {
+    border-bottom: 1px solid #c0c0c0;
+}
+
+/* nav-tabs样式 */
+
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: #008000;
+}
+
+.nav-tabs-custom > .nav-tabs > li {
+    border-top: 3px solid transparent;
+    border-top-color: #c0c0c0;
+    margin-bottom: -2px;
+    margin-right: 5px;
+}
+
+.nav-tabs-custom > .nav-tabs {
+    border-bottom-color: #008040;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin: 0;
+}
+/* lable字体粗细*/
+label {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/*  */
+/* .box-header {
+    color: #444;
+    display: block;
+    padding: 4px;
+    position: relative;
+} */
+/* 下拉框 */
+/* .chosen-container-single .chosen-single {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%) repeat scroll 0 0 padding-box;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #fff inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    color: #444;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    padding: 0 0 0 8px;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+} */
+/* 改变右侧主框底色 */
+.content-wrapper, .right-side {
+    background-color: #f9f9f9;
+    min-height: 100%;
+    z-index: 800;
+}
+/* box容器头文件字体大小改小 */
+.box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1;
+    margin: 0;
+}

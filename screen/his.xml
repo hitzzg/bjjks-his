@@ -1,99 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
-        require-authentication="false" screen-theme-type-enum-id="STT_INTERNAL" default-menu-title="医院管理系统">
-    <!-- NOTE: require-authentication=false is required to allow sub-screens to decide. -->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.6.xsd" require-authentication="false" standalone="true" default-menu-title="医院管理系统">
+	<!-- NOTE: require-authentication=false is required to allow sub-screens to decide. -->
+	<macro-template type="html" location="component://his/screen/his/templates/adminlte/AdminLTEScreenMacros.html.ftl" />
+	<transition name="setPreference">
+		<parameter name="preferenceKey" />
+		<parameter name="preferenceValue" />
+		<actions>
+			<script>ec.user.setPreference(preferenceKey, preferenceValue)</script>
+		</actions>
+		<default-response type="none" />
+	</transition>
+	<subscreens default-item="AppList">
+		<!-- refer to the various app roots here -->
+		<subscreens-item name="osrs" location="component://osrs/screen/osrs.xml" menu-title="医院门诊挂号系统" menu-index="81" />
+		<!-- <subscreens-item name="osqs" location="component://osqs/screen/osqs.xml" menu-title="医院排队叫号系统" menu-index="82" /> <subscreens-item name="osds" location="component://osds/screen/osds.xml" menu-title="医院门诊医生系统" menu-index="83" /> <subscreens-item 
+			name="oscs" location="component://oscs/screen/oscs.xml" menu-title="医院门诊收费系统" menu-index="84" /> <subscreens-item name="hods" location="component://hods/screen/hods.xml" menu-title="医院门诊发药系统" menu-index="85" /> <subscreens-item name="hpms" location="component://hpms/screen/hpms.xml" 
+			menu-title="医院药库管理系统" menu-index="86" /> <subscreens-item name="Admin" location="component://Admin/screen/Admin.xml" menu-title="后台管理" menu-index="90" /> -->
+	</subscreens>
+	<pre-actions>
+		<set field="appsLocation" value="component://his/screen/his.xml" />
+		<set field="currentScreenDef" from="sri.sfi.getScreenDefinition(appsLocation)" />
+		<set field="currentScreenPath" value="/his" />
+		<!-- <script>html_stylesheets.add("/js/jstree-3.0.3/themes/proton/style.css")</script> -->
+		<!-- <script>footer_scripts.add("/his/plugins/metismenu/metisMenu.js")</script> <script>html_stylesheets.add("/his/plugins/metismenu/metisMenu.css")</script> <script>html_stylesheets.add("/his/css/his.css")</script> -->
+	</pre-actions>
 
-    <transition name="setPreference">
-        <parameter name="preferenceKey"/><parameter name="preferenceValue"/>
-        <actions><script>ec.user.setPreference(preferenceKey, preferenceValue)</script></actions>
-        <default-response type="none"/>
-    </transition>
 
-    <subscreens default-item="AppList">
-        <!-- refer to the various app roots here -->
-        <subscreens-item name="osrs" location="component://osrs/screen/osrs.xml" menu-title="医院门诊挂号系统" menu-index="81"/>
-        <subscreens-item name="osqs" location="component://osqs/screen/osqs.xml" menu-title="医院排队叫号系统" menu-index="82"/>
-        <subscreens-item name="osds" location="component://osds/screen/osds.xml" menu-title="医院门诊医生系统" menu-index="83"/>
-        <subscreens-item name="oscs" location="component://oscs/screen/oscs.xml" menu-title="医院门诊收费系统" menu-index="84"/>   
-        <subscreens-item name="hods" location="component://hods/screen/hods.xml" menu-title="医院门诊发药系统" menu-index="85"/>         
-        <subscreens-item name="hpms" location="component://hpms/screen/hpms.xml" menu-title="医院药库管理系统" menu-index="86"/> 
-    </subscreens>
 
-    <widgets>
-        <container id="wrap"><!-- note: no "bg-light lter" or "bg-dark dk" styles here, on body -->
-            <container id="top">
-                <render-mode><text type="html" location="component://webroot/screen/includes/navbar.html.ftl"/></render-mode>
-                <subscreens-menu type="popup" id="header-menu" title="医院管理系统"/>
-            </container>
-            <!-- <container id="left"></container> -->
-            <container id="content">
-                <!-- <container style="outer"> -->
-                    <container style="inner">
-                        <section name="MessagesSection"><widgets>
-                            <section-iterate name="headerMessages" list="ec.message.messages" entry="message">
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${message}" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
-                            <section-iterate name="headerErrors" list="ec.message.errors" entry="errorMessage">
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${errorMessage}" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
-                            <section-iterate name="headerValidationErrors" list="ec.message.validationErrors" entry="validationError">
-                                <!-- TODO: put these by fields instead of in header -->
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${validationError.message} (for field ${validationError.field})" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
+	<widgets>
+		<render-mode>
+			<text type="html" location="component://his/screen/his/templates/adminlte/includes/Header.html.ftl" no-boundary-comment="true" />
+		</render-mode>
 
-                            <section-iterate name="headerSavedMessages" list="ec.web?.savedMessages" entry="message">
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-success fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${message}" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
-                            <section-iterate name="headerSavedErrors" list="ec.web?.savedErrors" entry="errorMessage">
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${errorMessage}" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
-                            <section-iterate name="headerSavedValidationErrors" list="ec.web?.savedValidationErrors" entry="validationError">
-                                <!-- TODO: put these by fields instead of in header -->
-                                <widgets>
-                                    <render-mode><text type="html"><![CDATA[<div class="alert alert-danger fade in" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>]]></text></render-mode>
-                                    <label text="${validationError.message} (for field ${validationError.field})" type="h4"/>
-                                    <render-mode><text type="html"><![CDATA[</div>]]></text></render-mode>
-                                </widgets>
-                            </section-iterate>
-                        </widgets></section>
+		<render-mode>
+			<text type="html" location="component://his/screen/his/templates/adminlte/includes/navbar.html.ftl" />
+		</render-mode>
+		<left-side>
 
-                        <subscreens-active/>
-                    </container>
-                <!-- </container> -->
-            </container>
-        </container>
-        <container id="footer" style="Footer bg-dark dker">
-            <render-mode><text type="html"><![CDATA[
-                    <#assign footerItemList = sri.getThemeValues("STRT_FOOTER_ITEM")>
-                    <div id="apps-footer-content">
-                        <#list footerItemList! as footerItem>
-                            <#assign footerItemTemplate = footerItem?interpret>
-                            <@footerItemTemplate/>
-                        </#list>
-                    </div>
-                ]]></text></render-mode>
-        </container>
-    </widgets>
+			<include-screen location="component://his/screen/his/templates/adminlte/LeftMenuTree.xml" share-scope="false" />
+
+		</left-side>
+		<container style="content-wrapper">
+			<!-- <container type="section" style="content-header"></container> -->
+			<container type="section" style="content">
+				<include-screen location="component://his/screen/his/Messages.xml" share-scope="false" />
+				<subscreens-active />
+			</container>
+
+
+		</container>
+		<render-mode>
+			<text type="html" location="component://his/screen/his/templates/adminlte/includes/Footer.html.ftl" />
+		</render-mode>
+	</widgets>
 </screen>
