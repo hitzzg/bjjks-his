@@ -7,9 +7,9 @@
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <#--<span class="logo-mini"><b>A</b>LT</span>-->
-          <span class="logo-mini"><b>北京结控所</b></span>
+          <span class="logo-mini"><b>医院管理系统</b></span>
           <!-- logo for regular state and mobile devices --> 
-          <span class="logo-lg"><b>北京结控所</b></span>
+          <span class="logo-lg"><b>医院管理系统</b></span>
         </a>
 
     <!-- Header Navbar -->
