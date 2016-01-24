@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.6.xsd">
+
+	<!-- ========================================================= -->
+	<!-- HIS系统实体定义 -->
+	<!-- ========================================================= -->
+
+	<!-- 病人资料 -->
+	<entity entity-name="IndividualPatientData" package-name="smj.his" short-alias="patientData" allow-user-field="true">
+		<field name="partyId" type="id" is-pk="true" />
+		<field name="medicalInsuranceForms" type="id"><description>医疗保证形式</description></field>
+
+		<relationship type="one" related-entity-name="mantle.party.Party" />
+	</entity>
+
+
+</entities>
